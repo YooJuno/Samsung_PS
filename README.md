@@ -1,4 +1,4 @@
-# Samsung_PS
+# Coding Test 준비
 
 제일 어려운게 삼성 PS인거 같아서 좀 쎄게 준비해보려 합니다.
 
