@@ -26,9 +26,26 @@ using namespace std;
 int main(){
 
     int N; // 1 <= N <= 1000
-    int num[N];
-    for(int i=0 ; i<N ; i++) cin>>num[i];
+    int arr[N+1];
+
+    int dp[N+1]; // 배열 넘버까지의 최대 길이를 저장
+
+    for(int i=1 ; i<=N ; i++){
+        cin>>arr[i];
+    }
+
+
+    for(int i=1 ; i<=N ; i++){
+        dp[i] = 1;
+        for(int j=1 ; j<=i ; j++){
+            arr[j] = 
+        }
+    }
+
     
+
+
+
 
     return 0;
 }
