@@ -1,4 +1,4 @@
 git add .
-DATE = $(date + "%y-%m-%d")
-git commit -m DATE
+DATE=$(date +"%y-%m-%d")
+git commit -m $DATE
 git push
