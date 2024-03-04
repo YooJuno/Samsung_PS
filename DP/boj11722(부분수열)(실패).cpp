@@ -26,26 +26,31 @@ using namespace std;
 int main(){
 
     int N; // 1 <= N <= 1000
-    int arr[N+1];
+    int A[1001];
+    int dp[1001]; // 배열 넘버까지의 최대 길이를 저장
+    int longest=0;
+    cin>>N;
 
-    int dp[N+1]; // 배열 넘버까지의 최대 길이를 저장
-
-    for(int i=1 ; i<=N ; i++){
-        cin>>arr[i];
-    }
-
-
-    for(int i=1 ; i<=N ; i++){
-        dp[i] = 1;
-        for(int j=1 ; j<=i ; j++){
-            arr[j] = 
-        }
-    }
-
+    for(int i=0 ; i<N ; i++) cin>>A[i];
     
+    for(int i=0 ; i<N ; i++){
+        dp[i] = 1; // i를 기점으로 i보다 뒤에 있는 숫자들을 비교할거라서 초기 값은 1.
+        for(int j=0 ; j<i ; j++){
+            if(A[j] > A[i]){
+                dp[i] = max(dp[i], dp[j]+1); 
+                // 왜 여기서 dp[i]의 값을 신경써야 하지?
+                // dp[i]의 값이 dp[j]+1 보다 큰 경우가 있나?
+                // j=0부터 i까지 올라가면서 중간 중간에 증가되지 못한 j들이 있음
+                // 근데 i는 j<i동안 계속 올라가니까 계속 추가될 수 있음
+                
+            }
+        }
+        longest = max(longest, dp[i]);
+        // cout<<"dp["<<i<<"] = "<<dp[i]<<endl;
+    }
 
-
-
+    // cout<<"longest : " << longest <<endl; 
+    cout<< longest <<endl; 
 
     return 0;
 }
