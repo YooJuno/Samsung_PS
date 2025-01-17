@@ -1,12 +1,19 @@
-
 #include <iostream>
 
 using namespace std;
 
+enum Test{
+	a,
+	b,
+	c,
+	d
+};
 
-int main(){
+Test t = a;
 
-    cout<<(5-10)/2.0<<endl;
-
+int main()
+{	
+	
+  	cout << t << endl;
     return 0;
 }
