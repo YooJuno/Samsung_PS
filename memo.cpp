@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include <iostream>
 
 using namespace std;
@@ -16,4 +17,24 @@ int main()
     }
   
 	return 0;
+=======
+#include <iostream>
+
+using namespace std;
+
+enum Test{
+	a,
+	b,
+	c,
+	d
+};
+
+Test t = a;
+
+int main()
+{	
+	
+  	cout << t << endl;
+    return 0;
+>>>>>>> 9d73eec317374ac12fc6df377b91620f371fe3ac
 }
