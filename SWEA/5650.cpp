@@ -18,6 +18,7 @@ using namespace std;
 경우의 수)
 - 모든 빈 공간에 대해 상,하,좌,우 의 경우 계산
 */
+
 enum Direction
 {
     LEFT,
@@ -27,227 +28,152 @@ enum Direction
     CENTER
 };
 
-void changeDirection(int *offset_x, int *offset_y, Direction direction)
+void changeDirection(int *offsetY, int *offsetX, Direction direction)
 {
     if (direction == UP)
     {
-        *offset_y = -1;
-        *offset_x = 0;
+        *offsetY = -1;
+        *offsetX = 0;
     }
     else if (direction == DOWN)
     {
-        *offset_y = 1;
-        *offset_x = 0;
+        *offsetY = 1;
+        *offsetX = 0;
     }
     else if (direction == LEFT)
     {
-        *offset_y = 0;
-        *offset_x = -1;
+        *offsetY = 0;
+        *offsetX = -1;
     }
     else if (direction == RIGHT)
     {
-        *offset_y = 0;
-        *offset_x = 1;
+        *offsetY = 0;
+        *offsetX = 1;
     }
 }
 
-int playPinballGame(int **board, int N, int src_x, int src_y, Direction currentDirection)
+int playPinballGame(int **board, int N, int srcY, int srcX, Direction currentDirection)
 {
-    Direction direction = currentDirection;
+    auto direction = currentDirection;
+    auto point = 0;
+    auto y = srcY;
+    auto x = srcX;
+    int offsetY;
+    int offsetX;
 
-    int point = 0;
-
-    int y = src_y;
-    int x = src_x;
-    int offset_y, offset_x;
-    changeDirection(&offset_x, &offset_y, direction);
-    y += offset_y;
-    x += offset_x;
     while (true)
     {
+        changeDirection(&offsetY, &offsetX, direction);
+        y += offsetY;
+        x += offsetX;
+
+        // 점수 획득 조건 (1) 벽 부딪히기.
         if (x < 0 || x > N - 1 || y < 0 || y > N - 1)
         {
             if (y < 0)
-            {
                 direction = DOWN;
-                changeDirection(&offset_x, &offset_y, direction);
-            }
             else if (y > N - 1)
-            {
                 direction = UP;
-                changeDirection(&offset_x, &offset_y, direction);
-            }
             else if (x < 0)
-            {
                 direction = RIGHT;
-                changeDirection(&offset_x, &offset_y, direction);
-            }
             else if (x > N - 1)
-            {
                 direction = LEFT;
-                changeDirection(&offset_x, &offset_y, direction);
-            }
+
             point += 1;
-            x += offset_x;
-            y += offset_y;
         }
-        else if (x == src_x && y == src_y)
+        // 종료조건 (1) (블랙홀)
+        else if (x == srcX && y == srcY)
         {
             return point;
         }
-        else{
-            // 종료조건 (1) (블랙홀)
+        else
+        {
+            // 종료조건 (2) 블랙홀
             if (board[y][x] == -1)
             {
                 return point;
             }
-            // 빈공간
-            else if (board[y][x] == 0)
-            {
-                y += offset_y;
-                x += offset_x;
-            }
 
-            // 점수 획득 조건 (1) 블록
+            // 점수 획득 조건 (2) 블록
             else if (1 <= board[y][x] && board[y][x] <= 5)
             {
                 if (board[y][x] == 1)
                 {
                     if (direction == UP)
-                    {
                         direction = DOWN;
-                        changeDirection(&offset_x, &offset_y, direction);
-                    }
                     else if (direction == DOWN)
-                    {
                         direction = RIGHT;
-                        changeDirection(&offset_x, &offset_y, direction);
-                    }
                     else if (direction == LEFT)
-                    {
                         direction = UP;
-                        changeDirection(&offset_x, &offset_y, direction);
-                    }
                     else if (direction == RIGHT)
-                    {
                         direction = LEFT;
-                        changeDirection(&offset_x, &offset_y, direction);
-                    }
                 }
                 else if (board[y][x] == 2)
                 {
                     if (direction == UP)
-                    {
                         direction = RIGHT;
-                        changeDirection(&offset_x, &offset_y, direction);
-                    }
                     else if (direction == DOWN)
-                    {
                         direction = UP;
-                        changeDirection(&offset_x, &offset_y, direction);
-                    }
                     else if (direction == LEFT)
-                    {
                         direction = DOWN;
-                        changeDirection(&offset_x, &offset_y, direction);
-                    }
                     else if (direction == RIGHT)
-                    {
                         direction = LEFT;
-                        changeDirection(&offset_x, &offset_y, direction);
-                    }
                 }
                 else if (board[y][x] == 3)
                 {
                     if (direction == UP)
-                    {
                         direction = LEFT;
-                        changeDirection(&offset_x, &offset_y, direction);
-                    }
                     else if (direction == DOWN)
-                    {
                         direction = UP;
-                        changeDirection(&offset_x, &offset_y, direction);
-                    }
                     else if (direction == LEFT)
-                    {
                         direction = RIGHT;
-                        changeDirection(&offset_x, &offset_y, direction);
-                    }
                     else if (direction == RIGHT)
-                    {
                         direction = DOWN;
-                        changeDirection(&offset_x, &offset_y, direction);
-                    }
                 }
                 else if (board[y][x] == 4)
                 {
                     if (direction == UP)
-                    {
                         direction = DOWN;
-                        changeDirection(&offset_x, &offset_y, direction);
-                    }
                     else if (direction == DOWN)
-                    {
                         direction = LEFT;
-                        changeDirection(&offset_x, &offset_y, direction);
-                    }
                     else if (direction == LEFT)
-                    {
                         direction = RIGHT;
-                        changeDirection(&offset_x, &offset_y, direction);
-                    }
                     else if (direction == RIGHT)
-                    {
                         direction = UP;
-                        changeDirection(&offset_x, &offset_y, direction);
-                    }
                 }
                 else
                 {
                     if (direction == UP)
-                    {
                         direction = DOWN;
-                        changeDirection(&offset_x, &offset_y, direction);
-                    }
                     else if (direction == DOWN)
-                    {
                         direction = UP;
-                        changeDirection(&offset_x, &offset_y, direction);
-                    }
                     else if (direction == LEFT)
-                    {
                         direction = RIGHT;
-                        changeDirection(&offset_x, &offset_y, direction);
-                    }
                     else if (direction == RIGHT)
-                    {
                         direction = LEFT;
-                        changeDirection(&offset_x, &offset_y, direction);
-                    }
                 }
-                y += offset_y;
-                x += offset_x;
-                ++point;
+
+                point += 1;
             }
+
             // 웜홀 - 숫자가 같은 다른 웜홀로 이동. 진행 방향 유지
             else if (6 <= board[y][x] && board[y][x] <= 10)
-            {   
-                int flag = false;
-                for (int i = 0; i < N; i++)
+            {
+                auto isFound = false;
+                for (auto i = 0; i < N; i++)
                 {
                     for (int j = 0; j < N; j++)
                     {
                         if ((i != y || j != x) && (board[y][x] == board[i][j]))
                         {
-                            cout << "[" << i << ", " << j << "]\n";
-                            y = i + offset_y;
-                            x = j + offset_x;
-                            flag=true;
+                            y = i;
+                            x = j;
+                            isFound = true;
                             break;
                         }
                     }
-                    if(flag) break;
+                    if (isFound)
+                        break;
                 }
             }
         }
@@ -261,20 +187,18 @@ int main()
 
     for (auto test_case = 1; test_case <= T; test_case++)
     {
-        int max_point = -1;
+        auto max_point = 0;
 
         int N;
         cin >> N;
 
-        int **board = new int *[N];
-        ;
+        auto board = new int *[N];
+
         for (auto i = 0; i < N; i++)
         {
             board[i] = new int[N];
             for (auto j = 0; j < N; j++)
-            {
                 cin >> board[i][j];
-            }
         }
 
         for (auto i = 0; i < N; i++)
@@ -283,38 +207,33 @@ int main()
             {
                 if (board[i][j] == 0)
                 {
-                    int point = 0;
+                    auto point = 0;
                     Direction currentDirection = LEFT;
                     while (currentDirection != CENTER)
                     {
+                        point = playPinballGame(board, N, i, j, currentDirection);
                         switch (currentDirection)
                         {
                         case LEFT:
-                            point = playPinballGame(board, N, j, i, currentDirection);
                             currentDirection = RIGHT;
                             break;
 
                         case RIGHT:
-                            point = playPinballGame(board, N, j, i, currentDirection);
                             currentDirection = UP;
                             break;
 
                         case UP:
-                            point = playPinballGame(board, N, j, i, currentDirection);
                             currentDirection = DOWN;
                             break;
 
                         case DOWN:
-                            point = playPinballGame(board, N, j, i, currentDirection);
                             currentDirection = CENTER;
                             break;
                         }
                     }
 
                     if (point > max_point)
-                    {
                         max_point = point;
-                    }
                 }
             }
         }
