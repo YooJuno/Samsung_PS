@@ -1,40 +1,42 @@
-<<<<<<< HEAD
+/*
+////////// Do not remove //////////
+코드 실행 : ctrl + opt(win) + N
+
+*/
+
 #include <iostream>
 
 using namespace std;
-// 'A' == 65
-int main()
-{	
-  	int num; cin >> num;
-  
-	int arr[4][4];
-  	
-  	for(int i=0 ; i<16 ; i++)
+
+auto main() -> int
+{
+    int N;
+    int K;
+    cin >> N >> K;    
+
+    int arr[N];
+    for(int i=0; i<N; i++) cin >> arr[i];
+
+    int cnt = 0;
+
+    for(int i=0; i<N-2; i++)
     {
-      	arr[i/4][i%4] = num+i; 
-        cout << arr[i/4][i%4];
-      	(i%4==3) ? cout << " \n" : cout<< " ";
+        for(int j=i+1; j<N-1; j++)
+        {
+            int sumIJ = arr[i] + arr[j];
+            
+            for(int k=j+1; k<N; k++)
+            {
+                if(sumIJ + arr[k] == K)
+                {
+                    cnt++;
+                }
+            }
+        }
     }
-  
-	return 0;
-=======
-#include <iostream>
 
-using namespace std;
+    cout << cnt << endl;
 
-enum Test{
-	a,
-	b,
-	c,
-	d
-};
-
-Test t = a;
-
-int main()
-{	
-	
-  	cout << t << endl;
     return 0;
->>>>>>> 9d73eec317374ac12fc6df377b91620f371fe3ac
 }
+
