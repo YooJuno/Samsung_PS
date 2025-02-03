@@ -1,40 +1,34 @@
-<<<<<<< HEAD
 #include <iostream>
-
 using namespace std;
-// 'A' == 65
-int main()
-{	
-  	int num; cin >> num;
-  
-	int arr[4][4];
-  	
-  	for(int i=0 ; i<16 ; i++)
+
+auto isStable(int map[][4]) -> bool
+{
+    for(int i=0; i<5; i++)
     {
-      	arr[i/4][i%4] = num+i; 
-        cout << arr[i/4][i%4];
-      	(i%4==3) ? cout << " \n" : cout<< " ";
+        for(int j=0; j<4; j++)
+        {
+            if(map[i][j] == 1)
+            {
+                if(map[i-1][j]==1 || map[i][j-1]==1 || map[i+1][j] == 1 || map[i][j+1] == 1)
+                {
+                    return false;
+                }
+            }
+        }
     }
-  
-	return 0;
-=======
-#include <iostream>
 
-using namespace std;
+    return true;
+}
 
-enum Test{
-	a,
-	b,
-	c,
-	d
-};
+auto main() -> int
+{
+    int map[5][4];
 
-Test t = a;
+    for(auto i=0; i<5; i++)
+        for(auto j=0; j<4; j++)
+            cin >> map[i][j];
 
-int main()
-{	
-	
-  	cout << t << endl;
+    isStable(map) ? cout << "안정된 상태\n" : cout << "불안정한 상태\n";
+
     return 0;
->>>>>>> 9d73eec317374ac12fc6df377b91620f371fe3ac
 }
