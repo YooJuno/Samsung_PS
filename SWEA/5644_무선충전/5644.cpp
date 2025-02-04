@@ -33,18 +33,18 @@ public:
         cin >> pos.x >> pos.y >> c >> p;
         pos.x--;
         pos.y--;
-        memset(batteryArea, false, sizeof(batteryArea));
+        memset(boundary, false, sizeof(boundary));
     }
 
     void setBoundary()
     {
-        for(int i = max(0, pos.y-c); i <= min(9, pos.y+c); i++) // y
+        for(auto i = max(0, pos.y-c); i <= min(9, pos.y+c); i++) // y
         {
-            for(int j = max(0, pos.x-c); j <= min(9, pos.x+c); j++) // x
+            for(auto j = max(0, pos.x-c); j <= min(9, pos.x+c); j++) // x
             {
                 if(calcDistBetween(pos.x, pos.y, j, i) <= c)
                 {
-                    batteryArea[i][j] = true;
+                    boundary[i][j] = true;
                 }
             }
         }
@@ -53,11 +53,11 @@ public:
 
     void printBatteryArea()
     {
-        for(int i=0; i<10; i++)
+        for(auto i=0; i<10; i++)
         {
-            for(int j=0; j<10; j++)
+            for(auto j=0; j<10; j++)
             {
-                cout << batteryArea[i][j] << ' ';
+                cout << boundary[i][j] << ' ';
             }
             cout << endl;
         }
@@ -65,7 +65,7 @@ public:
 
     auto isInBoundary(Pos posP) -> bool
     {
-        return batteryArea[posP.y][posP.x];
+        return boundary[posP.y][posP.x];
     }
 
     auto getP() -> int
@@ -73,13 +73,13 @@ public:
         return p;
     }
 
-    void sumMap(vector<int> map[10][10])
+    void addBoundaryTo(vector<int> map[10][10])
     {
-        for(int i=0; i<10; i++)
+        for(auto i=0; i<10; i++)
         {
-            for(int j=0; j<10; j++)
+            for(auto j=0; j<10; j++)
             {
-                if(batteryArea[i][j] == true)
+                if(boundary[i][j] == true)
                     map[i][j].emplace_back(p);
             }
         }
@@ -89,7 +89,7 @@ private:
     Pos pos;
     int c; // 1 ≤ C ≤ 4
     int p; // 10 ≤ P ≤ 500
-    bool batteryArea[10][10];
+    bool boundary[10][10];
 };
 
 class Player
@@ -127,7 +127,7 @@ private:
 
 int main()
 {
-    freopen("sample_input.txt", "r", stdin);
+    // freopen("sample_input.txt", "r", stdin);
 
     int T; cin >> T;
 
@@ -153,19 +153,19 @@ int main()
         for(auto i=0; i<A; i++)
         {
             bc[i].setBoundary();
-            bc[i].sumMap(map);
+            bc[i].addBoundaryTo(map);
         }
 
         for(auto i=0; i<10; i++)
         {
-            for(int j=0; j<10; j++)
+            for(auto j=0; j<10; j++)
             {
                 sort(map[i][j].begin(), map[i][j].end(), [](int a, int b){ return a > b;});
             }
         }
 
         // Timer Start
-        for(auto t=0; t<M; t++)
+        for(auto t=0; t<=M; t++)
         {
             auto tempSum = 0;
             // 현재 위치에 있는 모든 플레이어가 어떤떤 배터리 차저 영역에 있으면
@@ -189,7 +189,7 @@ int main()
                         // 어느 하나라도 다른 곳에도 걸쳐 있으면
                         else
                         {
-                            for(int j=0; j<A; j++)
+                            for(auto j=0; j<A; j++)
                             {
                                 if(i!=j)
                                 {
