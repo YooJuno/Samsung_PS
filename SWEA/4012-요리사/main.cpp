@@ -2,10 +2,12 @@
 
 using namespace std;
 
-struct Pos
-{
-    
-};
+/*
+[Input]
+
+
+
+*/
 
 int main()
 {
@@ -17,6 +19,7 @@ int main()
     {
         int N, M, A; cin >> N >> M >> A;
 
+        
 
 
         
