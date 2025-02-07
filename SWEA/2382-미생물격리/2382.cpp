@@ -2,6 +2,11 @@
 
 using namespace std;
 
+struct Pos
+{
+    
+};
+
 int main()
 {
     freopen("sample_input.txt", "r", stdin);
@@ -10,7 +15,9 @@ int main()
 
     for (auto test_case = 1; test_case <= T; test_case++)
     {
-        int M, A; cin >> M >> A;
+        int N, M, A; cin >> N >> M >> A;
+
+
 
         
     }

@@ -1,13 +1,13 @@
 #include <iostream>
-#include <vector>
 #include <cmath>
-
+#include <cstring>
+#include <algorithm>
 using namespace std;
 
-int* weights;
-int p[9] = {}
+int arr[10];
+int cnt;
 
-void scale(int arr[], int left, int right, int depth, int* cnt, int N, int sum)
+void scale(int left, int right, int depth, int N, int sum)
 {
     if(left < right)
     {
@@ -16,7 +16,7 @@ void scale(int arr[], int left, int right, int depth, int* cnt, int N, int sum)
 
     if(depth == N-1)
     {
-        (*cnt)++;
+        (cnt)++;
         return;
     }
 
@@ -32,7 +32,7 @@ void scale(int arr[], int left, int right, int depth, int* cnt, int N, int sum)
                 juno *= hi;
             }
         }
-        (*cnt) += pow(2, hi)*juno;
+        (cnt) += pow(2, hi)*juno;
         return;
     }
 
@@ -41,8 +41,8 @@ void scale(int arr[], int left, int right, int depth, int* cnt, int N, int sum)
         if(arr[i]==-1) continue;
         int temp = arr[i];
         arr[i] = -1;
-        scale(arr, left + temp, right, depth + 1, cnt, N, sum-temp);
-        scale(arr, left, right + temp, depth + 1, cnt, N, sum-temp); 
+        scale(left + temp, right, depth + 1, N, sum-temp);
+        scale(left, right + temp, depth + 1, N, sum-temp); 
         arr[i] = temp;
     }
 }
@@ -55,33 +55,28 @@ int main()
 	
 	for(int test_case = 1; test_case <= T; ++test_case)
 	{
-        int cnt = 0;
         int sum = 0;
+        cnt = 0;
 
         int N; cin >> N;
-        // vector<int> v(N);
-        
-        int arr[N];
+        memset(arr, 0, sizeof(arr));
 
         for(int i=0; i<N; i++)
         {
-            // cin >> v[i];
-            // sum += v[i];
             cin >> arr[i];
             sum += arr[i];
         }
+        sort(arr, arr+N, greater<int>());
 
         for(int i=0; i<N; i++)
         {
             int temp = arr[i];
             arr[i] = -1;
-            scale(arr, temp, 0, 0, &cnt, N, sum-temp);
+            scale(temp, 0, 0, N, sum-temp);
             arr[i] = temp;
         }
 
         cout << '#' << test_case << ' ' << cnt << endl;
-
-        delete weights;
 	}
 
     return 0;
