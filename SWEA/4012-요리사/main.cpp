@@ -1,39 +1,49 @@
 #include <iostream>
+#include <cstring>
 
 using namespace std;
 
-int table[16][16];
-int arr[8];
-int minV;
+int minV;   
+int map[16][16];
+int N;
+int visited[16];
 
-void recursive(int depth, int idx, int N, int totalSum, int halfSum)
+void recursive(int depth, int idx)
 {
-    
-    if(depth == N/2-1)
+    if(depth == N/2)
     {
-        for(auto e : arr)
+        int sumLeft = 0;
+        int sumRight = 0;
+        int cntLeft = 0;
+        int cntRight = 0;
+        int arrLeft[8] = {0,};
+        int arrRight[8] = {0,};
+        for(int i=0; i<N; i++)
         {
-            cout << e << ' ';
+            if(visited[i]) 
+                arrLeft[cntLeft++] = i;
+            else  
+                arrRight[cntRight++] = i;
         }
-        cout << " => " << abs(totalSum - halfSum*2) <<  endl;
-        if(minV > abs(totalSum - halfSum*2)) 
+        for(int i=0; i<N/2-1; i++)
         {
-            minV = abs(totalSum - halfSum*2);
-            cout << " => " << minV << endl;
+            for(auto j = i+1; j < N/2; j++)
+            {
+                sumLeft += map[arrLeft[i]][arrLeft[j]];
+                sumRight += map[arrRight[i]][arrRight[j]];
+            }
         }
+        if(minV > abs(sumLeft - sumRight))
+            minV = abs(sumLeft - sumRight);
+    
         return;
-    }
-    
-    for(auto i = 0; i < depth; i++)
-    {
-        halfSum += table[arr[i]][arr[depth]];   
     }
 
     for(auto i = idx; i < N; i++)
     {
-        arr[depth+1] = i;
-        recursive(depth+1, i+1, N, totalSum, halfSum);
-        arr[depth+1] = -1;
+        visited[i] = true;
+        recursive(depth+1, i+1);
+        visited[i] = false;
     }
 }
 
@@ -42,33 +52,21 @@ auto main() -> int
     freopen("sample_input.txt", "r", stdin);
 
     int T; cin >> T;
-    // for(auto test_case=1; test_case<=T; test_case++)
-    for(auto test_case=1; test_case<=2; test_case++)
+    for(auto test_case=1; test_case<=T; test_case++)
+    // for(auto test_case=1; test_case<=1; test_case++)
     {
-        memset(table, 0, sizeof(table));
-        memset(arr, -1, sizeof(arr));
-        minV = 20000 * 16 * 16 + 1;
-
         int result = 0;
-        int totalSum = 0;
-        int N; cin >> N;
+        memset(map, 0, sizeof(map));
+        memset(visited, 0, sizeof(visited));
+        cin >> N;
+        minV = 20000*16*16;
 
         for(auto i = 0; i < N; i++)
-        {
             for(auto j = 0; j < N; j++)
-            {
-                cin >> table[i][j];
-                totalSum += table[i][j];
-                if(i>j) table[j][i] += table[i][j];
-            }
-        }
-
-        for(auto i = 0; i < N/2; i++)
-        {
-            arr[0] = i;
-            recursive(0, i+1, N, totalSum, 0);
-            arr[0] = -1;
-        }
+                cin >> map[i][j];
+                if(i > j) map[j][i] += map[i][j];
+        
+        recursive(0, 0);
         
         cout << '#' << test_case << ' ' << minV << endl;
     }
