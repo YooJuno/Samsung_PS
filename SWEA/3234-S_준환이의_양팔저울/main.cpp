@@ -66,7 +66,6 @@ int main()
             cin >> arr[i];
             sum += arr[i];
         }
-        sort(arr, arr+N, greater<int>());
 
         for(int i=0; i<N; i++)
         {
