@@ -1,6 +1,4 @@
 #include <iostream>
-#include <cstring>
-#include <unodered_map>
 
 using namespace std;
 
@@ -12,50 +10,44 @@ enum Direction
     RIGHT
 };
 
-struct Cell 
+struct Atom
 {
     int x;
     int y;
     int direction;
-    int K; // 보유 에너지
-    bool isDead; // 죽었는지 
+    int k;
+    bool isDead;
 };
-
-void Move(Cell* cell)
-{
-    if(cell->direction == UP) cell->y++;
-    else if(cell->direction == DOWN) cell->y--;
-    else if(cell->direction == LEFT) cell->x--;
-    else if(cell->direction == RIGHT) cell->x++;
-}
 
 auto main() -> int
 {
     freopen("sample_input.txt", "r", stdin);
 
     int T; cin >> T;
-
-    for(int test_case=1; test_case<=T; test_case++)
+    for(auto test_case=1; test_case<=T; test_case++)
     {
-        int sum = 0;
+        int result = 0;
         
-        int N; cin >> N; // 원자들의 수 (1 <= N <= 1000)
-        Cell cells[N];
-        memset(cells, 0, sizeof(cells));
-        
+        int N; cin >> N;
+        Atom atom[N];
         for(auto i = 0; i < N; i++)
         {
-            cin >> cells[i].x >> cells[i].y >> cells[i].direction >> cells[i].K;
+            cin >> atom[i].x >> atom[i].y >> atom[i].direction >> atom[i].k;
         }
-        
-        int timer = 0;
-        while(++timer)
+
+        while(true)
         {
-            
+            for(auto i = 0; i < N; i++)
+            {
+                if(atom[i].direction == UP) atom[i].y++;
+                if(atom[i].direction == DOWN) atom[i].y--;
+                if(atom[i].direction == LEFT) atom[i].x--;
+                if(atom[i].direction == RIGHT) atom[i].x++;
+                
+            }
         }
         
-        cout << '#' << test_case << ' ' << sum << endl;
+        cout << '#' << test_case << ' ' << result << endl;
     }
-    
     return 0;
 }
