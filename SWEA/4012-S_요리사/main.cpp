@@ -63,8 +63,10 @@ auto main() -> int
 
         for(auto i = 0; i < N; i++)
             for(auto j = 0; j < N; j++)
+            {
                 cin >> map[i][j];
                 if(i > j) map[j][i] += map[i][j];
+            }
         
         recursive(0, 0);
         
