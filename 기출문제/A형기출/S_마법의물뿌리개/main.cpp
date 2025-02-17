@@ -66,7 +66,7 @@ auto main() -> int
                     else
                     {
                         continue;
-                    } 
+                    }
                     
                 }
                 else if(remaingHeight > 2)
