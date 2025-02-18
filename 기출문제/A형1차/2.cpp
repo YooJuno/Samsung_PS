@@ -20,7 +20,7 @@ void DFS_Front(int idx)
 	cntVisited++;
 	for (int i = 0; i < N; i++)
 	{
-		if (isVisited[i] == true || idx == i) 
+		if (isVisited[i] == true) 
 			continue;
 
 		if (graph[idx][i] == true)
@@ -36,7 +36,7 @@ void DFS_Back(int idx)
 	cntVisited++;
 	for (int i = 0; i < N; i++)
 	{
-		if (isVisited[i] == true || idx == i) 
+		if (isVisited[i] == true) 
 			continue;
 
 		if (graph[i][idx] == true)

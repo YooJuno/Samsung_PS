@@ -26,9 +26,7 @@ auto main() -> int
         int cafe[N][N];
         for(auto i = 0; i < N; i++)
             for(auto j = 0; j < N; j++)
-                cin >> cafe[i][j];
-
-        
+                cin >> cafe[i][j];        
         
         cout << '#' << test_case << ' ' << result << endl;
     }
