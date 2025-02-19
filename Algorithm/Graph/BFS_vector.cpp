@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstring>
 #include <deque>
+#include <vector>
 
 using namespace std;
 
@@ -19,32 +20,23 @@ DFS : 0 - 1 - 3 - 4 - 2 - 5 - 6
 BFS : 0 - 1 - 2 - 3 - 4 - 5 - 6
 */
 
-bool arr[7][7] = {
-    {0, 1, 1, 0, 0, 0, 0},
-    {1, 0, 0, 1, 1, 0, 0},
-    {0, 0, 0, 0, 0, 1, 1},
-    {0, 1, 0, 0, 0, 0, 0},
-    {0, 1, 0, 0, 0, 0, 0},
-    {0, 0, 1, 0, 0, 0, 0},
-    {0, 0, 1, 0, 0, 0, 0}
+int N = 7;
+int edge = 6;
+int input[6][2] = {
+    {0, 1},
+    {0, 2},
+    {1, 3},
+    {1, 4},
+    {2, 5},
+    {2, 6}
 };
 
+vector<int> v[7];
 bool isVisited[7];
 
-void DFS(int cur)
-{
-    isVisited[cur] = true;
-    cout << cur << ' ';
-
-    for(auto i = 0; i < 7; i++)
-    {
-        if(isVisited[i] == true) continue;
-        if(arr[cur][i] == false) continue;
-        
-        DFS(i);
-    }
-}
-
+// Recursive X
+// BFS는 edge별 cost가 동일할때 좋음
+// 근데 edge별 cost가 다르면... dijkstra 사용
 void BFS(int cur)
 {
     isVisited[cur] = true;
@@ -60,24 +52,25 @@ void BFS(int cur)
         dq.pop_front();
 
         // now에 연결되어있는 모든 노드를 visit
-        for(auto i = 0; i < 7; i++)
+        for(auto i = 0; i < v[now].size(); i++)
         {
-            if(arr[now][i] == false)
-                continue;
-            if(isVisited[i] == true)
+            if(isVisited[v[now][i]] == true)
                 continue;
 
-            isVisited[i] = true;
-            dq.push_back(i);
+            isVisited[v[now][i]] = true;
+            dq.push_back(v[now][i]);
         }
     }
 }
 
 auto main() -> int
 {
-    memset(isVisited, 0, sizeof(isVisited));
-    cout << "DFS : ";
-    DFS(0);
+    for(auto i = 0; i < edge; i++)
+    {
+        // 양뱡향 그래프
+        v[input[i][0]].push_back(input[i][1]);
+        v[input[i][1]].push_back(input[i][0]);
+    }
 
     memset(isVisited, 0, sizeof(isVisited));
     cout << "\nBFS : ";

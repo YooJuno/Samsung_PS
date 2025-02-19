@@ -19,7 +19,7 @@ v[3] : {1, 6}, {4, 3}
 
 auto main() -> int
 {
-    cout << 21e8;
+    cout << 21e8; // int 최댓값
     
     return 0;
 }
