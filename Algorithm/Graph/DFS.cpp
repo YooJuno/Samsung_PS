@@ -4,13 +4,16 @@ using namespace std;
 
 /*
 
-Depth-First Search
+[Depth-First Search]
 
 깊이 갈 수 있는데까지 간다.
 1. 모든 경우를 다 둘러봐야할 때 사용함.
-    - 해결을 위해 재귀 사용?(언제 끝날지 모르니까 사용)
-    - 재귀는 조건 만족하면 끝내버림
-2. 
+
+[필요 기술]
+- Vector(혹은 인접그래프)
+- Visited 배열
+- Recursive()
+
 */
 
 int nodeCnt;
